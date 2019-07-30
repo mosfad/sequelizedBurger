@@ -1,0 +1,99 @@
+<img id="burger-img" src="https://source.unsplash.com/JqnuWlHmDfE" alt="Burger...Yum!" width="200">
+<h1>Eat-Da-Burger!</h1>
+<div class="all-burgers">
+    <div class="avail-burgers" id="left-side">
+        <ul>
+            {{#each burgers}}
+                {{#unless this.devoured}}
+                    <li id="not-eaten{{this.id}}">
+                        <div class="not-eaten">
+                            <p>
+                                {{this.id}}.  {{this.burger_name}}
+                            </p>
+                        <button id="{{this.id}}" data-burgerid="{{this.devoured}}" class="eat-burger">Devour it!</button>
+                        </div>
+                    </li>
+                {{/unless}}
+            {{/each}}
+        </ul>
+
+    </div>
+    <div class="eaten-burgers" id="right-side">
+        <ul>
+            {{#each burgers}}
+                {{#if this.devoured}}
+                    <li class="eaten-list">
+                        <p class="eaten">
+                        {{this.id}}. {{this.burger_name}}
+                        </p>
+                    </li>
+                {{/if}}
+            {{/each}}
+        </ul>
+    </div>
+
+</div>
+<div id="form-container">
+<form id="create-burger">
+  <div class="form-group">
+    <textarea id="add-burger" name="burger" rows="4" cols="40"></textarea>
+  </div>
+  <button type="submit">Submit</button><br>
+  <span>Enter a burger you want to eat and click "Submit" button</span>
+</form>
+</div>
+
+
+
+<script type="text/javascript">
+  
+  $("#create-burger").on("submit", function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+    console.log("I am inside the create burger event");
+    // [name=plan] will find an element with a "name" attribute equal to the string "plan"
+    var newBurger = {
+      name: $("#create-burger [name=burger]").val().trim(),
+      devoured: false
+    };
+    console.log(newBurger);
+    // Send the POST request.
+    $.ajax("/api/burgers", {
+      type: "POST",
+      data: newBurger
+    }).then(
+      function() {
+        console.log("created new burger");
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
+
+  $(".eat-burger").on("click", function(event) {
+    // Get the ID from the button.
+    var idElem = $(this);
+    var id = idElem.attr("id");
+    console.log("I am inside the update burger event");
+    
+    var updatedBurger = {
+      devoured: true
+    };
+    console.log(updatedBurger);
+    // Send the PUT request.
+    $.ajax("/api/burgers/" + id, {
+      type: "PUT",
+      data: updatedBurger
+    }).then(
+      function() {//NOTHING IS HAPPENING HERE..........................
+        console.log("updated id, " + id);
+        // The burger has been devoured so move it!
+        //var removeItem = $("#not-eaten" + id);
+        //removeItem.remove();
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
+</script>
+

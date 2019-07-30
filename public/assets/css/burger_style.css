@@ -1,0 +1,54 @@
+body{
+    background-color: #FFCC80;
+}
+
+ul{
+    list-style: none;
+}
+
+.not-eaten p{
+    display: inline-block;
+    width: 20%;
+}
+
+img{
+    display: block;
+    width:20%;
+    margin: 0 auto;
+}
+
+h1{
+    text-align: center;
+}
+
+.all-burgers{
+    display: flex;
+    justify-content: center;
+}
+
+.avail-burgers{
+    width: 35%;
+}
+
+.not-eaten p{
+    box-sizing: border-box;
+    background-color: beige;
+    width: 70%;
+    padding: 15px 5px;
+    font-family: cursive;
+    font-weight: bold;
+}
+
+.eaten-list{
+    background-color: #BCAAA4;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+}
+.eaten{
+    display: inline-block;
+}
+
+#form-container{
+    display: flex;
+    justify-content: center;
+}
